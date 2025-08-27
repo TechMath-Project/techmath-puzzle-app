@@ -17,7 +17,7 @@ export default function Home() {
             alert('問題を選択してください')
             return
         }
-        router.push(`/${selectedProblem}?penName=${encodeURIComponent(penName)}`)
+        router.push(`/question/${selectedProblem}?penName=${encodeURIComponent(penName)}`)
     }
 
     return (

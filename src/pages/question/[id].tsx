@@ -5,8 +5,7 @@ const problemDetails: Record<string, { text: string }> = {
     '1': { text: '3兄弟を年上から順に並べてください。\n回答方法：氏名>氏名>氏名' },
 }
 
-const WORKERS_API_URL =
-    'https://techmath-puzzle-app-backend.yukkin1204-mathematics.workers.dev/check-answer'
+const WORKERS_API_URL = '/api/check-answer'
 
 export default function Question() {
     const router = useRouter()
