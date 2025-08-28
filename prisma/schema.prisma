@@ -1,0 +1,25 @@
+// prisma/schema.prisma
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url  	    = env("DATABASE_URL")
+}
+
+model question {
+    id           Int      @id @default(autoincrement())
+    questionName String
+    createdAt    DateTime @default(now())
+}
+
+model Answer {
+    id           Int      @id @default(autoincrement())
+    questionId   Int
+    answerNo     Int
+    label        String
+    answer       String
+    createdAt    DateTime @default(now())
+}
