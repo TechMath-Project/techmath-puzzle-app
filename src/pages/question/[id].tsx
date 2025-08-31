@@ -22,7 +22,7 @@ export default function Question() {
         const res = await fetch(WORKERS_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ penName, problemId: id, answer }),
+            body: JSON.stringify({ penName, puzzleId: id, answer }),
         })
         const data = await res.json()
         if (data.success) {
