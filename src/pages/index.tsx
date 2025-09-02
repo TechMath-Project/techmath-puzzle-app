@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-const problems = [{ id: '1', title: '問題1：論理包含の3兄弟' }]
+const problems = [
+    { id: '1', title: '問題1：論理包含の3兄弟' },
+    { id: '2', title: '問題2：論理包含の6兄弟' },
+]
 
 export default function Home() {
     const [penName, setPenName] = useState('')
@@ -17,7 +20,7 @@ export default function Home() {
             alert('問題を選択してください')
             return
         }
-        router.push(`/question/${selectedProblem}?penName=${encodeURIComponent(penName)}`)
+        router.push(`/puzzle/${selectedProblem}?penName=${encodeURIComponent(penName)}`)
     }
 
     return (

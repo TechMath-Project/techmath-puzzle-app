@@ -1,25 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-const problemDetails: Record<string, { text: string }> = {
-    '1': { text: '3兄弟を年上から順に並べてください。\n回答方法：氏名>氏名>氏名' },
-}
-
-const WORKERS_API_URL = '/api/check-answer'
-
-export default function Question() {
+export default function Puzzle() {
     const router = useRouter()
     const { id, penName } = router.query
 
+    const [explanation, setExplanation] = useState('')
     const [answer, setAnswer] = useState('')
     const [message, setMessage] = useState('')
 
-    if (!id || !penName) {
-        return <p>読み込み中...</p>
-    }
+    useEffect(() => {
+        if (!router.isReady) {
+            return
+        }
+        const fetchPuzzle = async () => {
+            const res = await fetch('/api/get-puzzle-info', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ puzzleId: id }),
+            })
+            const data = await res.json()
+            setExplanation(data.puzzleInfo.explanation)
+        }
+        fetchPuzzle()
+    }, [router.isReady, id])
 
     const onSubmit = async () => {
-        const res = await fetch(WORKERS_API_URL, {
+        const res = await fetch('/api/check-answer', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ penName, puzzleId: id, answer }),
@@ -38,9 +45,7 @@ export default function Question() {
 
     return (
         <div style={{ maxWidth: 400, margin: 'auto', padding: 20 }}>
-            <div style={{ whiteSpace: 'pre-line' }}>
-                {problemDetails[id as string]?.text || '問題がありません'}
-            </div>
+            <div style={{ whiteSpace: 'pre-line' }}>問題：{explanation}</div>
 
             <label>
                 答え：
