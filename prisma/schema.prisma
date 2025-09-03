@@ -8,18 +8,17 @@ generator client {
 }
 
 model Puzzle {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
-  numOfAnswer Int
-  explanation String
-  createdAt   DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  explanation  String
+  created_at   DateTime @default(now())
 }
 
 model PuzzleAnswer {
-  id        Int      @id @default(autoincrement())
-  puzzleId  Int
-  answerNo  Int
-  message   String
-  answer    String
-  createdAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  puzzle_id  Int
+  order_no   Int
+  label      String
+  answer     String
+  created_at DateTime @default(now())
 }
