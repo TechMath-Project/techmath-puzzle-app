@@ -14,7 +14,7 @@ model Puzzle {
   created_at   DateTime @default(now())
 }
 
-model PuzzleAnswer {
+model PuzzleItem {
   id         Int      @id @default(autoincrement())
   puzzle_id  Int
   order_no   Int

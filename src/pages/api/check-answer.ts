@@ -12,8 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ success: false, message: '必須項目がありません' })
     }
     try {
-        const puzzleAnswers = await prisma.puzzleAnswer.findMany({
-            where: { puzzleId: Number(puzzleId) },
+        const puzzleAnswers = await prisma.puzzleItem.findMany({
+            where: { puzzle_id: Number(puzzleId) },
         })
         const correctAnswer = puzzleAnswers[0].answer
         if (!correctAnswer) {
