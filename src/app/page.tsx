@@ -1,12 +1,14 @@
+'use client'
+
 import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 const problems = [
     { id: '1', title: '問題1：論理包含の3兄弟' },
     { id: '2', title: '問題2：論理包含の6兄弟' },
 ]
 
-export default function Home() {
+export default function HomePage() {
     const [penName, setPenName] = useState('')
     const [selectedProblem, setSelectedProblem] = useState('')
     const router = useRouter()
