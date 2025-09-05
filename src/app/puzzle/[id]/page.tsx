@@ -1,16 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 interface PuzzlePageProps {
-    params: { id: string }
+    params: Promise<{
+        id: string
+    }>
 }
 
 export default function PuzzlePage({ params }: PuzzlePageProps) {
     const searchParams = useSearchParams()
     const penName = searchParams.get('penName') || ''
-    const { id } = params
+    const id = use(params).id
 
     const [explanation, setExplanation] = useState('')
     const [answer, setAnswer] = useState('')
