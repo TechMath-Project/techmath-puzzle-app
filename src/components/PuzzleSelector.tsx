@@ -20,38 +20,52 @@ export default function PuzzleSelector({ puzzles }: { puzzles: Puzzle[] }) {
         router.push(`/puzzle/${selectedProblem}?penName=${encodeURIComponent(penName)}`)
     }
 
+    const safePuzzles = puzzles || []
+
     return (
-        <>
-            <label>
-                ペンネーム：
-                <br />
-                <input
-                    type='text'
-                    value={penName}
-                    onChange={(e) => setPenName(e.target.value)}
-                    style={{ width: '100%', padding: 8 }}
-                />
-            </label>
+        <div className='max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg space-y-6'>
+            <div className='space-y-4'>
+                <div>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        ペンネーム
+                    </label>
+                    <input
+                        type='text'
+                        value={penName}
+                        onChange={(e) => setPenName(e.target.value)}
+                        placeholder='あなたのペンネームを入力'
+                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-gray-900 placeholder-gray-500'
+                    />
+                </div>
 
-            <label style={{ marginTop: 20, display: 'block' }}>
-                問題を選んでください：
-                <select
-                    value={selectedProblem}
-                    onChange={(e) => setSelectedProblem(e.target.value)}
-                    style={{ width: '100%', padding: 8, marginTop: 8 }}
-                >
-                    <option value=''>-- 選択してください --</option>
-                    {puzzles.map((p) => (
-                        <option key={p.id} value={p.id}>
-                            {p.name}
+                <div>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>
+                        問題を選んでください
+                    </label>
+                    <select
+                        value={selectedProblem}
+                        onChange={(e) => setSelectedProblem(e.target.value)}
+                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-gray-900 bg-white'
+                    >
+                        <option value='' className='text-gray-500'>
+                            -- 選択してください --
                         </option>
-                    ))}
-                </select>
-            </label>
+                        {safePuzzles.map((p) => (
+                            <option key={p.id} value={p.id} className='text-gray-900'>
+                                {p.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
 
-            <button onClick={onStart} style={{ marginTop: 30, padding: '10px 20px', fontSize: 16 }}>
+            <button
+                onClick={onStart}
+                className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+                disabled={!selectedProblem || !penName}
+            >
                 スタート
             </button>
-        </>
+        </div>
     )
 }
