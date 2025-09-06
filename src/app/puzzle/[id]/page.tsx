@@ -1,17 +1,17 @@
 import { prisma } from '@/lib/db'
 import { AnswerForm } from '@/components/AnswerForm'
 
-export default async function PuzzlePage({
-    params,
-    searchParams,
-}: {
-    params: { id: string }
-    searchParams?: { penName?: string }
-}) {
-    const puzzle = await prisma.puzzle.findUnique({
-        where: { id: Number(params.id) },
-    })
+type PuzzlePageProps = {
+    params: Promise<{ id: string }>
+    searchParams?: Promise<{ penName?: string }>
+}
 
+export default async function PuzzlePage({ params, searchParams }: PuzzlePageProps) {
+    const { id } = await params
+    const { penName = '' } = (await searchParams) ?? {}
+    const puzzle = await prisma.puzzle.findUnique({
+        where: { id: Number(id) },
+    })
     if (!puzzle) {
         return (
             <div className='min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4'>
@@ -27,8 +27,6 @@ export default async function PuzzlePage({
             </div>
         )
     }
-
-    const penName = searchParams?.penName || ''
 
     return (
         <div className='min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4'>
