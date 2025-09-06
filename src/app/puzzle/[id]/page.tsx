@@ -1,12 +1,13 @@
 import { prisma } from '@/lib/db'
 import { AnswerForm } from '@/components/AnswerForm'
 
-interface PuzzlePageProps {
+export default async function PuzzlePage({
+    params,
+    searchParams,
+}: {
     params: { id: string }
     searchParams?: { penName?: string }
-}
-
-export default async function PuzzlePage({ params, searchParams }: PuzzlePageProps) {
+}) {
     const puzzle = await prisma.puzzle.findUnique({
         where: { id: Number(params.id) },
     })
