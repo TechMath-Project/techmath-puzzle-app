@@ -33,6 +33,7 @@ export default function WordPressEmbedClient({ url }: WordPressEmbedProps) {
                 const embedData: EmbedData = await res.json()
                 setData(embedData)
             } catch (e) {
+                console.error('パズル記事取得エラー:', e)
                 setError(true)
             } finally {
                 setIsLoading(false)
