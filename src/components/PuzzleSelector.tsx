@@ -23,11 +23,11 @@ interface Puzzle {
 export default function PuzzleSelector({ puzzles }: { puzzles: Puzzle[] }) {
     const router = useRouter()
     const [penName, setPenName] = useState('')
-    const [selectedProblem, setSelectedProblem] = useState('')
+    const [selectedPuzzle, setSelectedPuzzle] = useState('')
 
     // スタートボタン押下時の処理
     const onStart = () => {
-        router.push(`/puzzle/${selectedProblem}?penName=${encodeURIComponent(penName)}`)
+        router.push(`/puzzle/${selectedPuzzle}?penName=${encodeURIComponent(penName)}`)
     }
 
     return (
@@ -52,9 +52,9 @@ export default function PuzzleSelector({ puzzles }: { puzzles: Puzzle[] }) {
                 </div>
                 {/* パズル選択セレクトボックス */}
                 <div className='space-y-2'>
-                    <Label htmlFor='problem'>問題を選んでください</Label>
-                    <Select value={selectedProblem} onValueChange={setSelectedProblem}>
-                        <SelectTrigger id='problem'>
+                    <Label htmlFor='puzzle'>問題を選んでください</Label>
+                    <Select value={selectedPuzzle} onValueChange={setSelectedPuzzle}>
+                        <SelectTrigger id='puzzle'>
                             <SelectValue placeholder='-- 選択してください --' />
                         </SelectTrigger>
                         <SelectContent>
@@ -71,7 +71,7 @@ export default function PuzzleSelector({ puzzles }: { puzzles: Puzzle[] }) {
                     variant='sky'
                     onClick={onStart}
                     className='w-full'
-                    disabled={!selectedProblem || !penName}
+                    disabled={!selectedPuzzle || !penName}
                 >
                     スタート
                 </Button>

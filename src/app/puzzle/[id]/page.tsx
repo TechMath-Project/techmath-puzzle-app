@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/db'
 import { AnswerForm } from '@/components/AnswerForm'
+import WordPressEmbed from '@/components/WordPressEmbed'
 
 type PuzzlePageProps = {
     params: Promise<{ id: string }>
@@ -31,11 +32,8 @@ export default async function PuzzlePage({ params, searchParams }: PuzzlePagePro
     return (
         <div className='min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4'>
             <div className='max-w-2xl mx-auto pt-8'>
-                <div className='bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-6'>
-                    <div className='flex items-center gap-3 mb-6'>
-                        <div className='text-3xl'>🧩</div>
-                        <h1 className='text-2xl font-bold text-gray-800'>パズル #{puzzle.id}</h1>
-                    </div>
+                <div className='bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl pt-2 pl-8 pr-8 pb-8 mb-6'>
+                    <WordPressEmbed url='https://techmath-project.com/2023/02/19/puzzle1/' />
 
                     <div className='bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100'>
                         <h2 className='text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2'>
