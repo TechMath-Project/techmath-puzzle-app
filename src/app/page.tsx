@@ -39,6 +39,8 @@ export default async function PuzzleListPage() {
                             <a
                                 href='https://techmath-project.com/'
                                 className='text-blue-600 underline'
+                                target='_blank'
+                                rel='noopener noreferrer'
                             >
                                 TechMath Project
                             </a>{' '}
