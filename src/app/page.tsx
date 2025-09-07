@@ -1,23 +1,62 @@
-// パズル一覧ページ
+// パズル一覧ページコンポーネント
 import { prisma } from '@/lib/db'
 import PuzzleSelector from '@/components/PuzzleSelector'
+export const revalidate = 600 // 10分ごとに再生成
 
-export default async function PuzzleListPage() {
-    const puzzles = await prisma.puzzle.findMany({
+// データベースからパズル一覧を取得する関数
+async function getPuzzles() {
+    return prisma.puzzle.findMany({
         select: { id: true, name: true },
         orderBy: { id: 'asc' },
     })
+}
+
+// メインコンポーネント
+export default async function PuzzleListPage() {
+    let puzzles: { id: number; name: string }[] = []
+    let errorMessage = ''
+
+    // パズル一覧の取得
+    try {
+        puzzles = await getPuzzles()
+    } catch (error) {
+        console.error('パズル取得エラー:', error)
+        errorMessage = 'パズルを取得できませんでした。時間を置いて再度アクセスしてください。'
+    }
+
     return (
-        <main className='min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4'>
+        <main className='min-h-screen bg-indigo-50 py-12 px-4'>
             <div className='container mx-auto'>
+                {/* ページヘッダー */}
                 <div className='text-center mb-8'>
                     <h1 className='text-4xl font-bold text-gray-800 mb-4'>
-                        てくますパズルへようこそ
+                        てくますパズルへようこそ！
                     </h1>
-                    <p className='text-lg text-gray-600'>お好みのパズルを選んで挑戦しましょう！</p>
+                    {/* エラーがない場合のみ説明文を表示 */}
+                    {!errorMessage && (
+                        <p className='text-lg text-gray-600'>
+                            このページでは{' '}
+                            <a
+                                href='https://techmath-project.com/'
+                                className='text-blue-600 underline'
+                            >
+                                TechMath Project
+                            </a>{' '}
+                            が作成したパズル問題に挑戦できます
+                        </p>
+                    )}
                 </div>
-                <PuzzleSelector puzzles={puzzles} />
+                {/* エラーがある場合はエラーメッセージ、ない場合はパズル選択コンポーネントを表示 */}
+                {errorMessage ? (
+                    <p className='text-red-600 text-lg text-center'>{errorMessage}</p>
+                ) : (
+                    <PuzzleSelector puzzles={puzzles} />
+                )}
             </div>
+            {/* ページフッター */}
+            <footer className='mt-12 text-center text-gray-500 text-sm'>
+                &copy; 2025 TechMath Project. All rights reserved.
+            </footer>
         </main>
     )
 }
