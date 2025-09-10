@@ -31,7 +31,7 @@ export default function PuzzleSelector({ puzzles }: { puzzles: Puzzle[] }) {
     }
 
     return (
-        <Card className='max-w-lg mx-auto'>
+        <Card className='max-w-2xl mx-auto'>
             {/* カードのヘッダー部分 */}
             <CardHeader className='text-center'>
                 <CardTitle className='text-2xl'>パズルを選んで挑戦しよう</CardTitle>

@@ -13,6 +13,10 @@ export default async function PuzzlePage({ params, searchParams }: PuzzlePagePro
     const puzzle = await prisma.puzzle.findUnique({
         where: { id: Number(id) },
     })
+    const puzzleItems = await prisma.puzzleItem.findMany({
+        where: { puzzle_id: Number(id) },
+        orderBy: { order_no: 'asc' },
+    })
     if (!puzzle) {
         return (
             <div className='min-h-screen bg-blue-50 flex items-center justify-center p-4'>
@@ -46,7 +50,7 @@ export default async function PuzzlePage({ params, searchParams }: PuzzlePagePro
                     </div>
                 </div>
 
-                <AnswerForm puzzleId={puzzle.id} penName={penName} />
+                <AnswerForm puzzleId={puzzle.id} penName={penName} puzzleItems={puzzleItems} />
             </div>
         </div>
     )
